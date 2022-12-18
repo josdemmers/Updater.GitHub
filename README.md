@@ -9,3 +9,5 @@ Updater.GitHub.exe --repo "josdemmers/NewWorldCompanion" --app "NewWorldCompanio
 
 - repo: Repository of the application you want to update.
 - app: Application that you want to update.
+
+<img src="./readme/readme-1.png" width="500">
