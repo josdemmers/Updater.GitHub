@@ -9,7 +9,11 @@
     xmlns:local="clr-namespace:Updater.GitHub"
     mc:Ignorable="d"
     Title="{Binding WindowTitle}" Height="450" Width="800"
-    WindowStartupLocation="CenterScreen">
+    WindowStartupLocation="CenterScreen"
+    ResizeMode="NoResize"
+    ShowMinButton="False"
+    ShowMaxRestoreButton="False"
+    Topmost="True">
     <mah:MetroWindow.LeftWindowCommands>
         <mah:WindowCommands>
             <Button Command="{Binding LaunchUpdGHOnGitHubCommand}" ToolTip="Updater.GitHub on GitHub">
@@ -20,8 +24,43 @@
             </Button>
         </mah:WindowCommands>
     </mah:MetroWindow.LeftWindowCommands>
-    
-    <Grid>
 
-    </Grid>
+    <AdornerDecorator>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <GroupBox Grid.Row="0" Header="Status">
+                <StackPanel Orientation="Vertical">
+                    <ProgressBar 
+                    Height="25"
+                    Maximum="100"
+                    Minimum="0"
+                    Value="{Binding DownloadProgress}" />
+                    <TextBlock
+                    Text="{Binding StatusText}"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Grid.Row="1" Header="Releases">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <ListBox Grid.Column="0" Padding=" 0 0 5 0" ItemsSource="{Binding Path=Releases}" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="True"/>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Margin="20 10 0 0" Text="{Binding Releases/Body}"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+
+            <Grid Grid.Row="0" RowSpan="2" Background="Black" Opacity="0.7" Visibility="{Binding ShowNotification, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Notification}" FontSize="25" Foreground="AliceBlue" FontWeight="ExtraBold"/>
+            </Grid>
+        </Grid>
+    </AdornerDecorator>
 </mah:MetroWindow>

@@ -1,11 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project=".\common.props" />
+  
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Images\icon.ico</ApplicationIcon>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <Content Include="Images\icon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="5.1.0" />
@@ -19,6 +26,11 @@
 
   <ItemGroup>
     <Folder Include="Config\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Updater.GitHub.Interfaces\Updater.GitHub.Interfaces.csproj" />
+    <ProjectReference Include="..\Updater.GitHub.Services\Updater.GitHub.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -4,13 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using NLog.Extensions.Logging;
 using Prism.DryIoc;
 using Prism.Ioc;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
+using Updater.GitHub.Interfaces;
+using Updater.GitHub.Services;
 using Updater.GitHub.Views;
 
 namespace Updater.GitHub
@@ -22,7 +18,8 @@ namespace Updater.GitHub
     {
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            // register other needed services here
+            // Register services
+            containerRegistry.RegisterSingleton<IReleaseManager, ReleaseManager>();
         }
 
         protected override IContainerExtension CreateContainerExtension()

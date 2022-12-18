@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Updater.GitHub": {
+      "commandName": "Project",
+      "commandLineArgs": "--repo \"josdemmers/NewWorldCompanion\" --app \"NewWorldCompanion.exe\""
+    }
+  }
+}
