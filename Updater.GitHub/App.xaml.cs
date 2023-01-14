@@ -26,7 +26,7 @@ namespace Updater.GitHub
         {
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddLogging(loggingBuilder =>
-                loggingBuilder.AddNLog(configFileRelativePath: "Config/NLog.config"));
+                loggingBuilder.AddNLog(configFileRelativePath: "Config/NLog-updater.config"));
 
             // Note: Do not upgrade DryIoc.Microsoft.DependencyInjection above Version="5.1.0" when using Prism.DryIoc Version="8.1.97"
             return new DryIocContainerExtension(new Container(CreateContainerRules()).WithDependencyInjectionAdapter(serviceCollection));

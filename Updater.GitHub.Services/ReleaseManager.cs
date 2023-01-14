@@ -61,17 +61,38 @@ namespace Updater.GitHub.Services
 
         public async void DownloadRelease(string uri)
         {
+            _logger.LogInformation($"Downloading: {uri}");
+
             await _httpClientHandler.DownloadZip(uri);
         }
 
         public async void ExtractRelease(string fileName)
         {
-            ZipFile.ExtractToDirectory(fileName, "./", true);
-            _eventAggregator.GetEvent<ReleaseExtractedEvent>().Publish();
+            try
+            {
+                _logger.LogInformation($"Extracting: {fileName}");
+
+                // Change the currently running executable so it can be overwritten.
+                var app = System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName ?? "Updater.GitHub.exe";
+                app = Path.GetFileName(app);
+                var bak = $"{app}.bak";
+                if (File.Exists(bak)) File.Delete(bak);
+                File.Move(app, bak);
+                File.Copy(bak, app);
+
+                ZipFile.ExtractToDirectory(fileName, "./", true);
+                _eventAggregator.GetEvent<ReleaseExtractedEvent>().Publish();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, MethodBase.GetCurrentMethod()?.Name);
+            }
         }
 
         public async void UpdateAvailableReleases(string repo)
         {
+            _logger.LogInformation($"Updating release info from: {repo}");
+
             string uri = $"https://api.github.com/repos/{repo}/releases";
             string json = await _httpClientHandler.GetRequest(uri);
             if (!string.IsNullOrWhiteSpace(json))

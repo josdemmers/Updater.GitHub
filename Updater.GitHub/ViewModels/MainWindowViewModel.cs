@@ -8,13 +8,9 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Printing;
 using System.Reflection;
-using System.Security.Policy;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Threading;
 using Updater.GitHub.Entities;
 using Updater.GitHub.Interfaces;
@@ -247,7 +243,9 @@ namespace Updater.GitHub.ViewModels
             _arguments.TryGetValue("app", out string? app);
             if (!string.IsNullOrWhiteSpace(app))
             {
+                _logger.LogInformation($"Launching: {app}");
                 Process.Start(app);
+                _logger.LogInformation($"Shutting down: Updater.GitHub");
                 Application.Current.Shutdown();
             }
             else
